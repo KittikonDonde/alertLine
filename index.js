@@ -1,18 +1,21 @@
 const oracledb = require('oracledb');
-const axios = require('axios');
+oracledb.outFormat = oracledb.OUT_FORMAT_OBJECT;
+async function fun() {
+    let con;
+    try {
+        con = await oracledb.getConnection({
 
-async function connectToOracle() {
-    let connection;
+            user: "itktk",
+            password: "1659",
+            connectString: "172.16.190.9:1521/MSH"
 
-   
-    
-    const dbConfig = {
-      user: 'your_username',
-      password: 'your_password',
-      connectString: 'your_connection_string'
-    };
-
+        });
+        const data = await con.execute(`SELECT * FROM UTABLES WHERE rownum <= 1`,);
+        console.log(data.rows);
+        I
+    } catch (err) {
+        console.error(err);
+    }
 }
+fun();
 
-// Call the function to connect to Oracle Database
-connectToOracle();
