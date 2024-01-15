@@ -1,21 +1,40 @@
 const oracledb = require('oracledb');
-oracledb.outFormat = oracledb.OUT_FORMAT_OBJECT;
-async function fun() {
-    let con;
-    try {
-        con = await oracledb.getConnection({
 
-            user: "itktk",
-            password: "1659",
-            connectString: "172.16.190.9:1521/MSH"
+async function fetchData() {
+  let connection;
 
-        });
-        const data = await con.execute(`SELECT * FROM UTABLES WHERE rownum <= 1`,);
-        console.log(data.rows);
-        I
-    } catch (err) {
-        console.error(err);
+  try {
+    // เชื่อมต่อกับ Oracle Database โดยใช้โหมด Thin
+    connection = await oracledb.getConnection({
+      user: 'admin',
+      password: '999',
+      connectString: '172.16.190.9:1521/MSH',
+    });
+
+    // Query ข้อมูล
+    const result = await connection.execute('SELECT COUNT(p.hn) AS patient_count FROM opds o JOIN PATIENTS p ON o.pat_run_hn = p.run_hn AND o.pat_year_hn = p.year_hn WHERE o.opd_date = TRUNC(SYSDATE);');
+    const data = result.rows;
+
+    return data;
+  } catch (error) {
+    console.error('Error fetching data:', error);
+    throw error;
+  } finally {
+    // ปิดการเชื่อมต่อ
+    if (connection) {
+      try {
+        await connection.close();
+      } catch (err) {
+        console.error('Error closing connection:', err);
+      }
     }
+  }
 }
-fun();
 
+fetchData()
+  .then(data => {
+    console.log('Fetched data:', data);
+  })
+  .catch(error => {
+    console.error('Error:', error);
+  });
