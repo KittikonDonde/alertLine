@@ -32,7 +32,7 @@ async function main() {
     connection = await connectDb();
     const data = await fetchData(connection);
 
-    console.log('Fetched data:', data);
+    console.log('ผู้มารับบริการ(รวม)', data);
 
     // ส่งข้อมูลไปแจ้งเตือนผ่าน Line Notify
     await sendLineNotify(`ผู้มารับบริการ(รวม) ${data} ราย`);
