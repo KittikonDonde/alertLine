@@ -6,18 +6,22 @@ const LINE_NOTIFY_TOKEN = 'OVXf49cca6TBXLhGpQe4KNNrFM8peQOmuV8WpUn5nw0'; // เนเ
 
 async function sendLineNotify(message) {
   const url = 'https://notify-api.line.me/api/notify';
-  
+
   try {
-    await axios.post(url, `message=${message}`, {
+    const response = await axios.post(url, `message=${message}`, {
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
         'Authorization': `Bearer ${LINE_NOTIFY_TOKEN}`
       }
     });
 
-    console.log('Line Notify sent successfully');
+    if (response.status === 200) {
+      console.log('Line Notify sent successfully');
+    } else {
+      console.error('Error sending Line Notify. Status:', response.status);
+    }
   } catch (error) {
-    console.error('Error sending Line Notify:', error);
+    console.error('Error sending Line Notify:', error.message);
   }
 }
 
