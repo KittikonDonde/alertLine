@@ -2,7 +2,7 @@ const { connectDb, closeConnection } = require('./dbConnector');
 const { fetchData } = require('./dataFetcher');
 const axios = require('axios');
 
-const LINE_NOTIFY_TOKEN = 'Q2YRD3UOri3KMdsMLKDhZPUyknG6fxkpIJq4S0guayx'; // แทนที่ด้วย Line Notify token ของคุณ
+const LINE_NOTIFY_TOKEN = 'OVXf49cca6TBXLhGpQe4KNNrFM8peQOmuV8WpUn5nw0'; // แทนที่ด้วย Line Notify token ของคุณ
 
 async function sendLineNotify(message) {
   const url = 'https://notify-api.line.me/api/notify';
@@ -21,7 +21,7 @@ async function sendLineNotify(message) {
   }
 }
 
-async function fetchDataAndSendNotify() {
+async function main() {
   let connection;
 
   try {
@@ -30,26 +30,13 @@ async function fetchDataAndSendNotify() {
 
     console.log('Fetched data:', data);
 
-    // แสดงข้อมูลในรูปแบบที่ไม่มีวงเล็บ
-    const formattedData = data[0][0];
-
     // ส่งข้อมูลไปแจ้งเตือนผ่าน Line Notify
     await sendLineNotify(`ผู้มารับบริการ(รวม) ${data} ราย`);
   } catch (error) {
-    console.error('Error in fetchDataAndSendNotify function:', error);
+    console.error('Error in main function:', error);
   } finally {
     await closeConnection(connection);
   }
 }
 
-// กำหนดให้ทำงานทุก 13:35 น.
-setInterval(async () => {
-  const now = new Date();
-  const currentHour = now.getHours();
-  const currentMinute = now.getMinutes();
-
-  if (currentHour === 13 && currentMinute === 40) {
-    console.log('Running fetchDataAndSendNotify at 13:35...');
-    await fetchDataAndSendNotify();
-  }
-}, 60000); // 60000 มีนาทีเท่ากับ 1 นาที
+main();
