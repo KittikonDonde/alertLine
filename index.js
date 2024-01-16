@@ -1,40 +1,55 @@
-const oracledb = require('oracledb');
+const { connectDb, closeConnection } = require('./dbConnector');
+const { fetchData } = require('./dataFetcher');
+const axios = require('axios');
 
-async function fetchData() {
-  let connection;
+const LINE_NOTIFY_TOKEN = 'Q2YRD3UOri3KMdsMLKDhZPUyknG6fxkpIJq4S0guayx'; // แทนที่ด้วย Line Notify token ของคุณ
 
+async function sendLineNotify(message) {
+  const url = 'https://notify-api.line.me/api/notify';
+  
   try {
-    // เชื่อมต่อกับ Oracle Database โดยใช้โหมด Thin
-    connection = await oracledb.getConnection({
-      user: 'admin',
-      password: '999',
-      connectString: '172.16.190.9:1521/MSH',
+    await axios.post(url, `message=${message}`, {
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Authorization': `Bearer ${LINE_NOTIFY_TOKEN}`
+      }
     });
 
-    // Query ข้อมูล
-    const result = await connection.execute('SELECT COUNT(p.hn) AS patient_count FROM opds o JOIN PATIENTS p ON o.pat_run_hn = p.run_hn AND o.pat_year_hn = p.year_hn WHERE o.opd_date = TRUNC(SYSDATE)');
-    const data = result.rows;
-
-    return data;
+    console.log('Line Notify sent successfully');
   } catch (error) {
-    console.error('Error fetching data:', error);
-    throw error;
-  } finally {
-    // ปิดการเชื่อมต่อ
-    if (connection) {
-      try {
-        await connection.close();
-      } catch (err) {
-        console.error('Error closing connection:', err);
-      }
-    }
+    console.error('Error sending Line Notify:', error);
   }
 }
 
-fetchData()
-  .then(data => {
+async function fetchDataAndSendNotify() {
+  let connection;
+
+  try {
+    connection = await connectDb();
+    const data = await fetchData(connection);
+
     console.log('Fetched data:', data);
-  })
-  .catch(error => {
-    console.error('Error:', error);
-  });
+
+    // แสดงข้อมูลในรูปแบบที่ไม่มีวงเล็บ
+    const formattedData = data[0][0];
+
+    // ส่งข้อมูลไปแจ้งเตือนผ่าน Line Notify
+    await sendLineNotify(`ผู้มารับบริการ(รวม) ${data} ราย`);
+  } catch (error) {
+    console.error('Error in fetchDataAndSendNotify function:', error);
+  } finally {
+    await closeConnection(connection);
+  }
+}
+
+// กำหนดให้ทำงานทุก 13:35 น.
+setInterval(async () => {
+  const now = new Date();
+  const currentHour = now.getHours();
+  const currentMinute = now.getMinutes();
+
+  if (currentHour === 13 && currentMinute === 40) {
+    console.log('Running fetchDataAndSendNotify at 13:35...');
+    await fetchDataAndSendNotify();
+  }
+}, 60000); // 60000 มีนาทีเท่ากับ 1 นาที
