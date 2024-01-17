@@ -39,7 +39,12 @@ async function main() {
     console.log('Service recipient', data);
 
     // Send Line Notify message with date and service recipient count
-    await sendLineNotify(`${currentDate}\nผู้มารับบริการ(รวม) ${data} ราย\nผู้มารับบริการ(คนไทย)   ราย
+    await sendLineNotify(`โรงบาลแม่สอด
+${currentDate}
+ข้อมูล ณ เวลา 16:00 น.
+---------------------------------
+ผู้มารับบริการ(รวม) ${data} ราย
+ผู้มารับบริการ(คนไทย)   ราย
 ผู้มารับบริการ(ต่างชาติ)   ราย
 ผู้ป่วยในที่นอน รพ.(รวม)   ราย
 ผู้ป่วยในที่นอน รพ.(คนไทย)   ราย
