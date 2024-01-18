@@ -7,7 +7,14 @@ const { otherNative } = require('./othernative')
 const { admitcount } = require('./admit');
 const { thaiadmit } = require('./thaiadmit')
 const { otheradmit } = require('./otheradmit')
-
+const { forward } = require('./forward')
+const {thaiforward} =require('./thaiforward')
+const {otherforward} = require('./otherforward')
+const {dead} = require('./ipddead')
+const {thaiIPDdead} = require('./thaiIPDdead')
+const {otherIPDdead} = require('./otherIPDdead')
+const {opddead} = require('./opddead')
+  
 const LINE_NOTIFY_TOKEN = 'OVXf49cca6TBXLhGpQe4KNNrFM8peQOmuV8WpUn5nw0'; // Replace with your Line Notify token
 
 async function sendLineNotify(message) {
@@ -42,6 +49,14 @@ async function main() {
     const inpatientAdmissions = await admitcount(connection);
     const thaiadmitcount = await thaiadmit(connection);
     const otheradmitcount = await otheradmit(connection);
+    const forwardcount = await forward(connection);
+    const thaiforwardcount = await thaiforward(connection);
+    const otherforwardcount = await otherforward(connection);
+    const ipddeadcount = await dead(connection);
+    const thaiipddeadcount = await thaiIPDdead(connection);opddead
+    const otheripddeadcount = await otherIPDdead(connection);
+    const opddeadcount = await opddead(connection);
+
 
 
 
@@ -55,6 +70,21 @@ async function main() {
     console.log('Inpatient Admissions:', inpatientAdmissions);
     console.log('thaiadmitcount:', thaiadmitcount);
     console.log('otheradmitcount:', otheradmitcount);
+    console.log('forwardcount:', forwardcount);
+    console.log('thaiforwardcount:', thaiforwardcount);
+    console.log('otherforwardcount:', otherforwardcount);
+    console.log('opddeadcount:', opddeadcount);
+
+
+
+
+    console.log('ipddeadcount:', ipddeadcount);
+    console.log('thaiipddeadcount:', thaiipddeadcount);
+    console.log('otheripddeadcount:', otheripddeadcount);
+
+
+
+
 
 
 
@@ -69,12 +99,15 @@ ${currentDate}
 ผู้ป่วยในที่นอน รพ.(รวม) ${inpatientAdmissions}  ราย
 ผู้ป่วยในที่นอน รพ.(คนไทย) ${thaiadmitcount} ราย
 ผู้ป่วยในที่นอน รพ.(ต่างชาติ) ${otheradmitcount} ราย
-ผู้ป่วยในจำหน่าย(รวม)   ราย
-ผู้ป่วยในจำหน่าย(คนไทย)   ราย
-ผู้ป่วยในจำหน่าย(ต่างชาติ)   ราย
-ผู้ป่วยนอกเสียชีวิต(รวม)   ราย
+ผู้ป่วยในจำหน่าย(รวม) ${forwardcount} ราย
+ผู้ป่วยในจำหน่าย (คนไทย) ${thaiforwardcount} ราย
+ผู้ป่วยในจำหน่าย(ต่างชาติ) ${otherforwardcount} ราย
+ผู้ป่วยนอกเสียชีวิต(รวม) ${opddeadcount} ราย
 ผู้ป่วยนอกเสียชีวิต(คนไทย)   ราย
 ผู้ป่วยนอกเสียชีวิต(ต่างชาติ)   ราย
+ผู้ป่วยในเสียชีวิต(รวม) ${ipddeadcount} ราย
+ผู้ป่วยในเสียชีวิต(คนไทย) ${thaiipddeadcount} ราย
+ผู้ป่วยในเสียชีวิต(ต่างชาติ) ${otheripddeadcount} ราย
 ผู้ป่วยนอก Refer in   ราย
 ผู้ป่วยนอก Refer out   ราย`);
 
