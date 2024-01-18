@@ -14,6 +14,8 @@ const {dead} = require('./ipddead')
 const {thaiIPDdead} = require('./thaiIPDdead')
 const {otherIPDdead} = require('./otherIPDdead')
 const {opddead} = require('./opddead')
+const { thaiOPDdead } =require('./thaiOPDdead')
+const {otherOPDdead} = require('./otherOPDdead')
   
 const LINE_NOTIFY_TOKEN = 'OVXf49cca6TBXLhGpQe4KNNrFM8peQOmuV8WpUn5nw0'; // Replace with your Line Notify token
 
@@ -53,11 +55,11 @@ async function main() {
     const thaiforwardcount = await thaiforward(connection);
     const otherforwardcount = await otherforward(connection);
     const ipddeadcount = await dead(connection);
-    const thaiipddeadcount = await thaiIPDdead(connection);opddead
+    const thaiipddeadcount = await thaiIPDdead(connection);
     const otheripddeadcount = await otherIPDdead(connection);
     const opddeadcount = await opddead(connection);
-
-
+    const thaiopddeadcount = await thaiOPDdead(connection);
+    const otherOPDdeadcount = await otherOPDdead(connection);
 
 
 
@@ -74,18 +76,11 @@ async function main() {
     console.log('thaiforwardcount:', thaiforwardcount);
     console.log('otherforwardcount:', otherforwardcount);
     console.log('opddeadcount:', opddeadcount);
-
-
-
-
+    console.log('thaiopddeadcount:', thaiopddeadcount);
+    console.log('otherOPDdeadcount:', otherOPDdeadcount);
     console.log('ipddeadcount:', ipddeadcount);
     console.log('thaiipddeadcount:', thaiipddeadcount);
     console.log('otheripddeadcount:', otheripddeadcount);
-
-
-
-
-
 
 
     // Send Line Notify message with date and service recipient count
@@ -93,21 +88,26 @@ async function main() {
 ${currentDate}
 ข้อมูล ณ เวลา 16:00 น.
 ---------------------------------
-ผู้มารับบริการ(รวม) ${data} ราย
-ผู้มารับบริการ(คนไทย) ${thaiNativecount} ราย
-ผู้มารับบริการ(ต่างชาติ) ${otherNativecount} ราย
-ผู้ป่วยในที่นอน รพ.(รวม) ${inpatientAdmissions}  ราย
-ผู้ป่วยในที่นอน รพ.(คนไทย) ${thaiadmitcount} ราย
-ผู้ป่วยในที่นอน รพ.(ต่างชาติ) ${otheradmitcount} ราย
-ผู้ป่วยในจำหน่าย(รวม) ${forwardcount} ราย
-ผู้ป่วยในจำหน่าย (คนไทย) ${thaiforwardcount} ราย
-ผู้ป่วยในจำหน่าย(ต่างชาติ) ${otherforwardcount} ราย
-ผู้ป่วยนอกเสียชีวิต(รวม) ${opddeadcount} ราย
-ผู้ป่วยนอกเสียชีวิต(คนไทย)   ราย
-ผู้ป่วยนอกเสียชีวิต(ต่างชาติ)   ราย
-ผู้ป่วยในเสียชีวิต(รวม) ${ipddeadcount} ราย
-ผู้ป่วยในเสียชีวิต(คนไทย) ${thaiipddeadcount} ราย
-ผู้ป่วยในเสียชีวิต(ต่างชาติ) ${otheripddeadcount} ราย
+ผู้มารับบริการ
+    (รวม) ${data} ราย
+    (คนไทย) ${thaiNativecount} ราย
+    (ต่างชาติ) ${otherNativecount} ราย
+ผู้ป่วยในที่นอน รพ.
+    (รวม) ${inpatientAdmissions}  ราย
+    (คนไทย) ${thaiadmitcount} ราย
+    (ต่างชาติ) ${otheradmitcount} ราย
+ผู้ป่วยในจำหน่าย
+    (รวม) ${forwardcount} ราย
+    (คนไทย) ${thaiforwardcount} ราย
+    (ต่างชาติ) ${otherforwardcount} ราย
+ผู้ป่วยนอกเสียชีวิต
+    (รวม) ${opddeadcount} ราย
+    (คนไทย) ${thaiopddeadcount} ราย
+    (ต่างชาติ) ${otherOPDdeadcount} ราย
+ผู้ป่วยในเสียชีวิต
+    (รวม) ${ipddeadcount} ราย
+    (คนไทย) ${thaiipddeadcount} ราย
+    (ต่างชาติ) ${otheripddeadcount} ราย
 ผู้ป่วยนอก Refer in   ราย
 ผู้ป่วยนอก Refer out   ราย`);
 
