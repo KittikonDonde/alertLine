@@ -5,8 +5,8 @@ async function otherIPDdead(connection) {
 FROM IPDTRANS I
 JOIN PATIENTS P ON I.HN = P.HN
 WHERE I.DS_STATUS_ID = '9'
-  AND I.DATEADMIT = TRUNC(SYSDATE) 
-  AND P.NATIVE_ID != '99'
+  AND TRUNC(I.datedisch) = TRUNC(SYSDATE)
+  AND P.native_id != 99
     `);
         const data = result.rows;
 

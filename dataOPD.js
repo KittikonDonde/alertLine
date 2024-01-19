@@ -6,7 +6,7 @@ async function fetchData(connection) {
       WHERE o.pat_run_hn = p.run_hn
         AND o.pat_year_hn = p.year_hn
         AND o.opd_date = TRUNC(SYSDATE)
-      GROUP BY o.opd_date
+      
     `);
 
     const data = result.rows;

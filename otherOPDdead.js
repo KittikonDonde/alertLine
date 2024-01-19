@@ -4,7 +4,7 @@ async function otherOPDdead(connection) {
         SELECT COUNT(DISTINCT O.OPD_NO)
         FROM OPDS O
         JOIN PATIENTS P ON o.pat_run_hn = p.run_hn
-        WHERE O.OPD_DATE = TRUNC(SYSDATE)
+        WHERE TRUNC(o.OPD_DATE) = TRUNC(SYSDATE)
         AND O.OPD_DISCHARGE_STATUSES IN ('04', '05', '06')
         AND P.NATIVE_ID != 99
     `);

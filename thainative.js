@@ -7,7 +7,7 @@ async function thaiNative(connection) {
         AND o.pat_year_hn = p.year_hn
         AND o.opd_date = TRUNC(SYSDATE)
 				AND p.native_id = 99
-      GROUP BY o.opd_date
+     
   `);
   
 

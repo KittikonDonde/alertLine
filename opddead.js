@@ -3,9 +3,8 @@ async function opddead(connection) {
         const result = await connection.execute(`
         SELECT COUNT(DISTINCT OPD_NO)
 FROM OPDS
-WHERE OPD_DATE = TRUNC(SYSDATE)
+WHERE TRUNC(OPD_DATE) = TRUNC(SYSDATE)
 AND OPD_DISCHARGE_STATUSES IN ('04', '05', '06')
-
     `);
         const data = result.rows;
 

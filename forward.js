@@ -1,10 +1,9 @@
 async function forward(connection) {
     try {
         const result = await connection.execute(`
-        SELECT COUNT(DISTINCT HN)
-FROM IPDTRANS 
-WHERE DATEADMIT=TRUNC(SYSDATE) 
-AND DS_STATUS_ID IS NOT NULL
+        select COUNT(DISTINCT HN)
+from ipdtrans
+where TRUNC(datedisch) = TRUNC(SYSDATE)
     `);
         const data = result.rows;
 

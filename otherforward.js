@@ -4,7 +4,7 @@ async function otherforward(connection) {
         SELECT COUNT(DISTINCT I.HN)
 FROM IPDTRANS I
 JOIN PATIENTS P ON I.HN = P.HN
-WHERE I.DATEADMIT = TRUNC(SYSDATE) 
+WHERE TRUNC(i.datedisch) = TRUNC(SYSDATE)
 AND I.DS_STATUS_ID IS NOT NULL 
 AND p.native_id != 99
     `);
