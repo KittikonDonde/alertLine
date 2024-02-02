@@ -1,7 +1,7 @@
 async function otherNative(connection) {
     try {
       const result = await connection.execute(`
-      SELECT COUNT(DISTINCT p.hn) 
+      SELECT COUNT( p.hn) 
         FROM opds o, PATIENTS p
         WHERE o.pat_run_hn = p.run_hn
           AND o.pat_year_hn = p.year_hn

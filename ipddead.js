@@ -1,7 +1,7 @@
 async function dead(connection) {
     try {
         const result = await connection.execute(`
-        SELECT  COUNT(DISTINCT HN)
+        SELECT  COUNT(HN)
 FROM IPDTRANS 
 WHERE DS_STATUS_ID = '9'
 AND TRUNC(datedisch) = TRUNC(SYSDATE)

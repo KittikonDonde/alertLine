@@ -1,7 +1,7 @@
 async function forward(connection) {
     try {
         const result = await connection.execute(`
-        select COUNT(DISTINCT HN)
+        select COUNT( HN)
 from ipdtrans
 where TRUNC(datedisch) = TRUNC(SYSDATE)
     `);

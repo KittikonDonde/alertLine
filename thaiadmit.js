@@ -1,7 +1,7 @@
 async function thaiadmit(connection) {
     try {
         const result = await connection.execute(`
-        SELECT COUNT(DISTINCT I.HN)
+        SELECT COUNT( I.HN)
 FROM IPDTRANS I
 JOIN PATIENTS P ON I.HN = P.HN
 WHERE I.DATEDISCH IS NULL
