@@ -1,4 +1,4 @@
-/*const oracledb = require('oracledb');
+const oracledb = require('oracledb');
 
 async function fetchData() {
   let connection;
@@ -38,4 +38,3 @@ fetchData()
   .catch(error => {
     console.error('Error:', error);
   });
-*/

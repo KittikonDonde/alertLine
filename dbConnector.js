@@ -1,4 +1,4 @@
-const oracledb = require('oracledb');
+/*const oracledb = require('oracledb');
 
 async function connectDb() {
   try {
@@ -26,4 +26,4 @@ async function closeConnection(connection) {
   }
 }
 
-module.exports = { connectDb, closeConnection };
+module.exports = { connectDb, closeConnection };*/
